@@ -11,7 +11,11 @@ void setup() {
 void loop() {
   int pos;
   while (HC12.available()) {        // If HC-12 has data
-    pos = HC12.read();
+    int val = HC12.read();
+    if(val>=0 && val<=45)
+      pos = (val*2)+90;
+    else
+      pos = (val-210)*2;
     Serial.print("Position: ");
     Serial.println(pos);
     myservo.write(pos);              // tell servo to go to position in variable 'pos' 
