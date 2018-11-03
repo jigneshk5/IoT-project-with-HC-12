@@ -5,7 +5,7 @@
 MPU6050 mpu6050(Wire);
 long timer=0;
 
-SoftwareSerial HC12(10, 9); // HC-12 TX Pin, HC-12 RX Pin
+SoftwareSerial HC12(7, 6); // HC-12 TX Pin, HC-12 RX Pin
 void setup() {
   Serial.begin(9600);             // Serial port to computer
   HC12.begin(9600);               // Serial port to HC12
@@ -16,15 +16,14 @@ void setup() {
 void loop() {
   mpu6050.update();
   int x= mpu6050.getAngleX();
-  Serial.println(x);
-  while (x>0 && x<=180) {      // servo can rotate from 0 to 180
+  while (x>=-45 && x<=45) {
     mpu6050.update();
     x= mpu6050.getAngleX();
-    Serial.print("Roll angle ");
+    Serial.print("DMP:");
     Serial.println(x);
     if(millis() - timer > 2000){   //Position will be sent every 2  sec after the readings settle down 
       HC12.write(x);      // Send that data to HC-12
-      timer= millis();
+      timer = millis();
     }
   }
 }
