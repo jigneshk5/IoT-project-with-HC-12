@@ -19,7 +19,7 @@ void loop() {
   while (x>=-45 && x<=45) {
     mpu6050.update();
     x= mpu6050.getAngleX();
-    Serial.print("DMP:");
+    Serial.print("RAW:");
     Serial.println(x);
     if(millis() - timer > 2000){   //Position will be sent every 2  sec after the readings settle down 
       HC12.write(x);      // Send that data to HC-12
